@@ -257,4 +257,4 @@ GitHub: [bigcode-project/starcoder2-self-align](https://github.com/bigcode-proje
 ## Author
 
 **Prabhath Vinay Vipparthi**
-[GitHub](https://github.com/prabhathv07) · [LinkedIn](https://linkedin.com/in/prabhath-vinay-vipparthi)
+[GitHub](https://github.com/prabhathv07) · [LinkedIn](https://www.linkedin.com/in/prabhath-vipparthi-90544b225/)
