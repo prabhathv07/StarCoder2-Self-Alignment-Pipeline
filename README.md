@@ -1,12 +1,12 @@
 # TypeScript Instruction Data Pipeline — StarCoder2 Self-Alignment
 
-A three-stage pipeline that synthesizes TypeScript coding instruction data from raw open-source code, adapting the SelfOSSInstruct methodology from the StarCoder2-15B paper. Runs on NJIT's Wulver HPC cluster using StarCoder2-3B as the backbone model via vLLM.
+A three-stage pipeline that synthesizes TypeScript coding instruction data from raw open-source code, adapting the SelfOSSInstruct methodology from the StarCoder2-15B paper, using StarCoder2-3B as the backbone model via vLLM.
 
 ![Python](https://img.shields.io/badge/Python-3.10-blue?logo=python&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-tree--sitter-3178C6?logo=typescript&logoColor=white)
 ![HuggingFace](https://img.shields.io/badge/HuggingFace-StarCoder2-FFD21E?logo=huggingface&logoColor=black)
 ![vLLM](https://img.shields.io/badge/vLLM-inference-blueviolet)
-![SLURM](https://img.shields.io/badge/HPC-SLURM%20%7C%20Wulver-orange)
+![Colab](https://img.shields.io/badge/Google%20Colab-GPU-F9AB00?logo=googlecolab&logoColor=white)
 
 ---
 
@@ -49,7 +49,7 @@ Step 1 — Seed Gathering
   └── Type-check with TypeScript compiler → 5,791 HQ functions (seed dataset)
          │
          ▼
-Step 2 — Self-OSS-Instruct  [StarCoder2-3B via vLLM on Wulver GPU]
+Step 2 — Self-OSS-Instruct  [StarCoder2-3B via vLLM on Google Colab]
   ├── S→C: Seed function → TypeScript concept list
   │         5,791 records → 5,791 concept annotations
   ├── C→I: Concepts + seed → natural language instruction
@@ -91,7 +91,7 @@ This is the core of the pipeline. Three sequential LLM inference passes transfor
 
 **I→R (Instruction → Response).** The model generates a TypeScript code response to the instruction. This is the output that would be used to fine-tune a model — the instruction is the question, the response is what the model should learn to produce.
 
-All three passes ran via vLLM on NJIT's Wulver cluster using a single A100 GPU, with `StarCoder2-3B` loaded from the cluster's shared model path. Inference was batched (batch size 32) and written to JSONL files incrementally.
+All three passes ran via vLLM on Google Colab using a GPU, with `StarCoder2-3B` loaded from HuggingFace. Inference was batched (batch size 32) and written to JSONL files incrementally.
 
 **Run stats:**
 - S→C: 5,791 / 5,791 records completed
@@ -167,37 +167,22 @@ Sample output files are in `sample_outputs/`.
 
 ## Compute Environment
 
-Ran on **NJIT Wulver HPC cluster**:
+Ran on **Google Colab**:
 
 | Resource | Config |
 |---|---|
-| Cluster | NJIT Wulver (SLURM) |
-| GPU | 1× A100 |
-| Memory | 64 GB RAM |
-| CPUs | 16 |
-| Python | 3.10.8 (foss/2022b) |
+| Platform | Google Colab |
+| GPU | T4 |
+| Python | 3.10 |
 | Model | StarCoder2-3B (`bigcode/starcoder2-3b`) |
 | Inference | vLLM |
-| QOS | low (`--qos=low --account=phan`) |
-
-Seed gathering ran on Google Colab (T4 GPU) for the S3 streaming + tree-sitter parsing steps.
 
 ---
 
 ## Setup
 
-**Environment:**
+**Environment (Google Colab):**
 ```bash
-# On Wulver — request GPU node
-srun -p gpu -n 1 --ntasks-per-node=2 --qos=low --account=phan \
-     --mem-per-cpu=64G --gres=gpu:1 --time=72:00:00 --pty bash
-
-module load foss/2022b Python/3.10.8
-
-# Create and activate your environment
-python -m venv ~/.venv/starcoder_align
-source ~/.venv/starcoder_align/bin/activate
-
 pip install -r requirements.txt
 ```
 
@@ -253,7 +238,7 @@ export OPENAI_BASE_URL="http://0.0.0.0:8000/v1/"
 
 ## What I'd Do Next
 
-- **Complete I→R generation** — the current run stopped at 448 records due to GPU time limits; a full run would produce 5,791 instruction-response pairs
+- **Complete I→R generation** — the current run stopped at 448 records due to Colab session limits; a full run would produce 5,791 instruction-response pairs
 - **Run full validation pass** — filter the 448 pairs with the validation step to get a clean subset
 - **Scale to StarCoder2-15B** — the 3B model generates reasonable but sometimes shallow instructions; the 15B model produces significantly better concept extraction and instruction quality
 - **Push dataset to HuggingFace Hub** — publish the final instruction dataset for community use and reproducibility
@@ -272,6 +257,4 @@ GitHub: [bigcode-project/starcoder2-self-align](https://github.com/bigcode-proje
 ## Author
 
 **Prabhath Vinay Vipparthi**
-MS Data Science — New Jersey Institute of Technology (May 2026)
-Course: DS677
 [GitHub](https://github.com/prabhathv07) · [LinkedIn](https://linkedin.com/in/prabhath-vinay-vipparthi)
