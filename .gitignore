@@ -1,1 +1,39 @@
+# Large binary dataset files
+*.arrow
+*.bin
+*.parquet
+
+# Full JSONL outputs (large) — see sample_outputs/ instead
+Step2_OSS_Final/seed3.jsonl
+Step2_OSS_Final/ts_s2c_output.jsonl
+Step2_OSS_Final/ts_c2i_output.jsonl
+Step2_OSS_Final/ts_i2r_output.jsonl
+Step2_OSS_Final/Step2_OSS_Final/
+Step3_Validation/seed3.jsonl
+Step3_Validation/ts_s2c_output.jsonl
+Step3_Validation/ts_c2i_output.jsonl
+Step3_Validation/ts_c2i_output.txt
+Step3_Validation/Step3_Validation/
+Seed_Gathering/Seed_Gathering_Final/8372_Functions/
+Seed_Gathering/Seed_Gathering_Final/6497_Filter_Functions/
+Seed_Gathering/Seed_Gathering_Final/5791_HQ_Functions/
+Seed_Gathering/Seed_Gathering_Final/newds_seed3/
+Seed_Gathering/Seed_Gathering_Final/newds_seed3.1/
+
+# Internal project docs
+DS677_Wulver_instruction.docx
+ProjectInstruction.pdf
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Compiled tree-sitter grammar
+build/
+
+# macOS
 .DS_Store
