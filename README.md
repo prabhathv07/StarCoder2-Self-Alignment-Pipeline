@@ -2,6 +2,7 @@
 
 A three-stage pipeline that synthesizes TypeScript coding instruction data from raw open-source code, adapting the SelfOSSInstruct methodology from the StarCoder2-15B paper, using StarCoder2-3B as the backbone model via vLLM.
 
+![License](https://img.shields.io/badge/License-Apache%202.0-green.svg)
 ![Python](https://img.shields.io/badge/Python-3.10-blue?logo=python&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-tree--sitter-3178C6?logo=typescript&logoColor=white)
 ![HuggingFace](https://img.shields.io/badge/HuggingFace-StarCoder2-FFD21E?logo=huggingface&logoColor=black)
